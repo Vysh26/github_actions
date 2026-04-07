@@ -1,4 +1,4 @@
-name: CI Flow
+name: Python CI
 
 on:
   push:
@@ -14,3 +14,11 @@ jobs:
 
       - name: Run a script
         run: echo "Hello, GitHub Actions!"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3:11'
+
+      - run: pip install pytest
+      - run: pytest
