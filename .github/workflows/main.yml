@@ -12,18 +12,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+  secrets_check:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Get secret
         run: echo "Secret is ${{ secrets.MY_SECRET }}"
 
       - name: Get Variable
         run: echo "Variable is ${{ vars.MY_VAR }}"
 
+  run_bash:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Run a script
         run: echo "Hello, GitHub Actions!"
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+  run_python:
+    runs-on: ubuntu-latest
 
-      - run: python sample_python.py
+    steps:
+      - name: Run script
+        run: python sample_python.py
+
