@@ -12,6 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get secret
+        run: echo "Secret is ${{ secrets.MY_SECRET }}"
+
+      - name: Get Variable
+        run: echo "Variable is ${{ vars.MY_NAME }}"
+
       - name: Run a script
         run: echo "Hello, GitHub Actions!"
 
