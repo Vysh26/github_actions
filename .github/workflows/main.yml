@@ -2,36 +2,32 @@ name: Python CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
+  # Job 1 (parallel)
   secrets_check:
     runs-on: ubuntu-latest
     steps:
-      - name: Get secret
-        run: echo "Secret is ${{ secrets.MY_SECRET }}"
+      - run: echo "Secret is ${{ secrets.MY_SECRET }}"
+      - run: echo "Variable is ${{ vars.MY_VAR }}"
 
-      - name: Get Variable
-        run: echo "Variable is ${{ vars.MY_VAR }}"
-
+  # Job 2 (parallel)
   run_bash:
     runs-on: ubuntu-latest
     steps:
-      - name: Run a script
-        run: echo "Hello, GitHub Actions!"
+      - run: echo "Hello from Bash!"
 
+  # Job 3 (sequential - waits for above)
   run_python:
+    needs: [secrets_check, run_bash]   # 👈 key line
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [ 3.9, 3.12, 3.11 ]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-         python-version: ${{ matrix.python-version }}
-      - name: Run script
-        run: python sample_python.py
 
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: python sample_python.py
