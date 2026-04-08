@@ -16,7 +16,7 @@ jobs:
         run: echo "Secret is ${{ secrets.MY_SECRET }}"
 
       - name: Get Variable
-        run: echo "Variable is ${{ vars.MY_NAME }}"
+        run: echo "Variable is ${{ vars.MY_VAR }}"
 
       - name: Run a script
         run: echo "Hello, GitHub Actions!"
