@@ -22,7 +22,7 @@ jobs:
 
   # Job 3 (sequential - waits for above)
   run_python:
-    needs: [secrets_check, run_bash]   # 👈 key line
+    needs: [ secrets_check, run_bash ]   # 👈 key line
     runs-on: ubuntu-latest
 
     steps:
@@ -33,4 +33,16 @@ jobs:
           python-version: '3.11'
 
       - run: python sample_python.py
+
+      - name: Create Python output file
+        run: |
+          mkdir -p output
+          echo "Python job completed successfully" > output/python.txt
+          echo "Run time: $(date)" >> output/python.txt
+
+      - name: Upload Python artifact
+        uses: actions/upload-artifact@v4
+        with:
+            name: python-output
+            path: output/
 
