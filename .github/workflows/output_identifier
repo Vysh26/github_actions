@@ -1,0 +1,30 @@
+name: Job outputs example
+
+on:
+  push:
+
+jobs:
+  create-value:
+    runs-on: ubuntu-latest
+
+    # Expose the step output as a job output
+    outputs:
+      version: ${{ steps.set-version.outputs.version }}
+
+    steps:
+      - name: Set version
+        id: set-version
+        run: |
+          VERSION="1.2.3"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+  use-value:
+    runs-on: ubuntu-latest
+
+    # This job must wait for create-value
+    needs: create-value
+
+    steps:
+      - name: Use version
+        run: |
+          echo "The version is: ${{ needs.create-value.outputs.version }}"
