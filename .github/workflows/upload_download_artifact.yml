@@ -25,6 +25,9 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      - name: Output contents
+        run: ls
+
   consume:
     needs: build
     runs-on: ubuntu-latest
@@ -37,6 +40,8 @@ jobs:
           path: downloaded-artifact/
 
       - name: Display downloaded files
+        run: ls
+      
         run: |
           find downloaded-artifact -type f
           cat downloaded-artifact/example.txt
