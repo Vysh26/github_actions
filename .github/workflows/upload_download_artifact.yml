@@ -25,9 +25,6 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Output contents
-        run: ls
-
   consume:
     needs: build
     runs-on: ubuntu-latest
